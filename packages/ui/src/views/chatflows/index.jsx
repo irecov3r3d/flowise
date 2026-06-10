@@ -111,12 +111,14 @@ const Chatflows = () => {
                     const flowData = JSON.parse(flowDataStr)
                     const nodes = flowData.nodes || []
                     images[chatflows[i].id] = []
+                    const seenNames = new Set()
                     for (let j = 0; j < nodes.length; j += 1) {
-                        if (nodes[j].data.name === 'stickyNote' || nodes[j].data.name === 'stickyNoteAgentflow') continue
-                        const imageSrc = `${baseURL}/api/v1/node-icon/${nodes[j].data.name}`
-                        if (!images[chatflows[i].id].some((img) => img.imageSrc === imageSrc)) {
+                        const name = nodes[j].data.name
+                        if (name === 'stickyNote' || name === 'stickyNoteAgentflow') continue
+                        if (!seenNames.has(name)) {
+                            seenNames.add(name)
                             images[chatflows[i].id].push({
-                                imageSrc,
+                                imageSrc: `${baseURL}/api/v1/node-icon/${name}`,
                                 label: nodes[j].data.label
                             })
                         }

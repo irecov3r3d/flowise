@@ -1,0 +1,3 @@
+## 2024-05-28 - Regex JSON Parsing Anti-Pattern
+**Learning:** Using regex to parse specific keys (`name`, `label`) out of a serialized JSON string to avoid calling `JSON.parse` is highly unsafe and can lead to silent data bugs (order dependencies, incorrect object matches). Modern JavaScript engines optimize `JSON.parse` extensively, making it generally safer and often fast enough.
+**Action:** Do not sacrifice correctness for micro-optimizations like parsing JSON manually with regex. Always prefer native `JSON.parse`. When optimizing, focus on algorithmic complexity changes, such as replacing `Array.prototype.some` searches with O(1) `Set` lookups.
